@@ -39,6 +39,7 @@
             </form>
         </div>
         <div>
+            <input type="text" id="search" placeholder="Search by user name">
             <table>
                 <tr>
                     <td>Name</td>
@@ -54,14 +55,15 @@
                 </tr>
                 {% else %}
                 {% for user in users %}
-                <tr>
+                <tr class="user-row">
                     <td>{{user.name}}</td>
                     <td>{{user.function}}</td>
                     <td>{{user.blame}}</td>
-                    <input type="hidden" value="{{user._id}}" id="id">
+                    <input type="hidden" value="{{user._id}}" class="user-id">
                     <td>
-                        <form action="/delete/{{user._id}}" method="get" id="deleteform"><button type="button"
-                                id="btn">Delete</button></form>
+                        <form action="/delete/{{user._id}}" method="get" class="delete-form">
+                            <button type="button" class="delete-btn">Delete</button>
+                        </form>
                         <a href="/edit/{{user._id}}">Edit</a>
                     </td>
                 </tr>
@@ -71,4 +73,6 @@
         </div>
     </section>
 </main>
+
+<script src="/assets/scripts/search.js"></script>
 {% endblock %}
