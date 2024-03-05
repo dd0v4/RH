@@ -1,65 +1,74 @@
 {% extends "../layouts/base.twig" %}
 
 {% block title %}
-    <title>{{title}}</title>
-{% endblock %}
-{% block main %}
-    <main>
-        <section>
-            <div>
-                <h2>Dashboard</h2>
-            </div>
-            <div id="myModal" class="modal">
-                <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <p>Do you really want to delete it ?</p>
-                  <div id="btnsModal">
-                    <button type="button">Yes</button>
-                    <button type="button">No</button>
-                  </div>
-                </div>  
-            </div>
-            <div id="useraddcont">
-                <p>Welcome , {{corporation.name}} ! </p>
-                <button type="button" id="adduser">Add user</button>
-                {% if success %}
-                    <p>User successfully created.</p>
-                {% endif %}
-                
-                <form action="" method="post" id="addUserForm">
-                    <h3>Name</h3>
-                    <input type="text" name="name" id="name">
-                    <h3>Photo</h3>
-                    <input type="text" name="photo" id="photo">
-                    <h3>Function</h3>
-                    <input type="text" name="function" id="function">
-                    <input type="hidden" name="blame" value="0">
-                    <button type="submit">Add</button>
-                </form>
-            </div>
-            <div>
-                <table>
-                    <tr>
-                        <td>Name</td>
-                        <td>Function</td>
-                        <td>Blames</td>
-                        <td>Actions</td>
-                    </tr>
-                {% for user in users %}
-                    <tr>
-                        <td>{{user.name}}</td>
-                        <td>{{user.function}}</td>
-                        <td>{{user.blame}}</td>
-                        <input type="hidden" value="{{user._id}}" id="id">
-                        <td>
-                            <form action="/delete/{{user._id}}" method="get" id="deleteform"><button type="button" id="btn">Delete</button></form>
-                            <a href="/edit/{{user._id}}">Edit</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </table>
-            </div>
-        </section>
-    </main>
+<title>{{title}}</title>
 {% endblock %}
 
+{% block main %}
+<main>
+    <section>
+        <div>
+            <h2>Dashboard</h2>
+        </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Do you really want to delete it ?</p>
+                <div id="btnsModal">
+                    <button type="button">Yes</button>
+                    <button type="button">No</button>
+                </div>
+            </div>
+        </div>
+        <div id="useraddcont">
+            <p>Welcome, {{corporation.name}}!</p>
+            <button type="button" id="adduser">Add user</button>
+            {% if success %}
+            <p>User successfully created.</p>
+            {% endif %}
+
+            <form action="" method="post" id="addUserForm">
+                <h3>Name</h3>
+                <input type="text" name="name" id="name">
+                <h3>Photo</h3>
+                <input type="text" name="photo" id="photo">
+                <h3>Function</h3>
+                <input type="text" name="function" id="function">
+                <input type="hidden" name="blame" value="0">
+                <button type="submit">Add</button>
+            </form>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>Function</td>
+                    <td>Blames</td>
+                    <td>Actions</td>
+                </tr>
+                {% if users is empty %}
+                <tr>
+                    <td colspan="4">
+                        <p>No users found. Please create one.</p>
+                    </td>
+                </tr>
+                {% else %}
+                {% for user in users %}
+                <tr>
+                    <td>{{user.name}}</td>
+                    <td>{{user.function}}</td>
+                    <td>{{user.blame}}</td>
+                    <input type="hidden" value="{{user._id}}" id="id">
+                    <td>
+                        <form action="/delete/{{user._id}}" method="get" id="deleteform"><button type="button"
+                                id="btn">Delete</button></form>
+                        <a href="/edit/{{user._id}}">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}
