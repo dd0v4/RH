@@ -1,0 +1,31 @@
+{% extends "../layouts/base.twig" %}
+{% block title %}
+    <title>{{title}}</title>
+{% endblock %}
+
+{% block main %}
+    <main>
+        <section>
+            <h2>Register</h2>
+            <form action="" method="post">
+                <h3>Director name</h3>
+                <input type="text" name="directorName" id="directorName">
+                <h3>SIRET number</h3>
+                <input type="text" name="siret" id="siret">
+                <h3>Company name</h3>
+                <input type="text" name="name" id="name">
+                <h3>Password</h3>
+                <input type="password" name="password" id="password">
+                <br>
+                <button type="submit">Register</button>
+                {% if error %}
+                    <p>
+                        {% for key, value in error %}
+                            {{ value }}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </form>
+        </section>
+    </main>
+{% endblock %}
