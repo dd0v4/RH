@@ -7,12 +7,11 @@ const span = document.getElementsByClassName("close")[0];
 btns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         e.preventDefault();
-        console.log('Parent ID:', btn.parentElement.id); // Debugging line
         modal.style.display = "block";
         yesno = document.querySelector("#btnsModal");
         yesno.children[0].addEventListener("click", (e) => {
             const formId = `#${btn.parentElement.id}`; 
-            console.log('Form ID:', formId); // Debugging line
+            console.log('Form ID:', formId); 
             const form = document.querySelector(formId); 
             form.submit(); 
         });

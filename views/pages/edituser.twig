@@ -7,11 +7,11 @@
 {% block main %}
 
 <main>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <h3>Name</h3>
         <input type="text" name="name" id="name" value="{{user.name}}">
         <h3>Photo</h3>
-        <input type="text" name="photo" id="photo" value="{{user.photo}}">
+        <input type="file" name="photo" id="photo" value="{{user.photo}}">
         <h3>Function</h3>
         <input type="text" name="function" id="function" value="{{user.function}}">
         <h3>Blames</h3>

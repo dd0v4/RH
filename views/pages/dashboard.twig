@@ -6,8 +6,8 @@
 
 {% block main %}
 <main>
-    <section>
-        <div>
+    <section id="dashboard">
+        <div id="title">
             <h2>Dashboard</h2>
         </div>
         <div id="myModal" class="modal">
@@ -30,8 +30,6 @@
             <form action="" method="post" id="addUserForm">
                 <h3>Name</h3>
                 <input type="text" name="name" id="name">
-                <h3>Photo</h3>
-                <input type="text" name="photo" id="photo">
                 <h3>Function</h3>
                 <input type="text" name="function" id="function">
                 <input type="hidden" name="blame" value="0">
@@ -42,6 +40,7 @@
             <input type="text" id="search" placeholder="Search by user name">
             <table>
                 <tr>
+                    <td>Photo</td>
                     <td>Name</td>
                     <td>Function</td>
                     <td>Blames</td>
@@ -56,19 +55,27 @@
                 {% else %}
                 {% for user in users %}
                 <tr class="user-row">
+                    <td>
+                        {% if user.photo %}
+                            <img src="{{user.photo}}" alt="Photo of {{user.name}}">
+                        {% else %}
+                            No picture
+                        {% endif %}
+                    </td>
                     <td>{{user.name}}</td>
                     <td>{{user.function}}</td>
                     <td>{{user.blame}}</td>
-                    <input type="hidden" value="{{user._id}}" class="user-id">
-                    <td>
-                        <form action="/delete/{{user._id}}" method="get" class="delete-form">
-                            <button type="button" class="delete-btn">Delete</button>
+                    <td class="actions">
+                        <form action="/delete/{{user._id}}" method="get" class="delete-form" id="delete-form-{{loop.index}}">
+                            <button type="button" class="delete-btn" id="btn">Delete</button>
                         </form>
-                        <a href="/edit/{{user._id}}">Edit</a>
+                        <form action="/edit/{{user._id}}" method="get">
+                            <button type="submit">Edit</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}
-                {% endif %}
+                {% endif %}                
             </table>
         </div>
     </section>

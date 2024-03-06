@@ -3,8 +3,21 @@ const corporationRouter = require("express").Router();
 const bcrypt = require("bcrypt");
 const authguard = require("../services/authguard");
 const corporationModel = require("../models/corporationModel");
+const multer = require("multer");
 
 
+const path = require("path");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, "../uploads"));
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage});
 
 corporationRouter.get("/", async (req, res) =>{
     res.render("./pages/home.twig");
@@ -129,23 +142,26 @@ corporationRouter.get("/edit/:id" , authguard, async (req, res) => {
     }
 })
 
-corporationRouter.post("/edit/:id", authguard, async (req, res) => {
+corporationRouter.post("/edit/:id", upload.single("photo"), authguard, async (req, res) => {
     try {
-        const updatedUser = await userModel.updateOne({ _id: req.params.id }, req.body);
-        const user = await userModel.findById(req.params.id);
-        if(user.blame >= 3){
-            await userModel.deleteOne({_id: req.params.id})
+        const updatedUser = await userModel.findByIdAndUpdate(req.params.id, { 
+            $set: { 
+                photo: "/uploads/" + req.file.filename 
+            } 
+        }, { new: true });
+        if (updatedUser.blame >= 3) {
+            await userModel.findByIdAndDelete(req.params.id);
         }
+
         res.render("./pages/edituser.twig", {
             success: true,
             title: "Edit",
-            user: user
+            user: updatedUser
         });
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
     }
 });
-
 
 module.exports = corporationRouter;
