@@ -152,7 +152,6 @@ corporationRouter.post("/edit/:id", upload.single("photo"), authguard, async (re
         if (updatedUser.blame >= 3) {
             await userModel.findByIdAndDelete(req.params.id);
         }
-
         res.render("./pages/edituser.twig", {
             success: true,
             title: "Edit",

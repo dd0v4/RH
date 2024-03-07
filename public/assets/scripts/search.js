@@ -1,10 +1,10 @@
-const searchInput = document.getElementById('search');
+const searchInput = document.querySelector('#search');
 const userRows = document.querySelectorAll('.user-row');
 
-searchInput.addEventListener('input', function () {
+searchInput.addEventListener('input', () => {
     const search = searchInput.value.toLowerCase();
-    userRows.forEach(function (row) {
-        const userName = row.querySelector('td:first-child').textContent.toLowerCase();
+    userRows.forEach((row) => {
+        const userName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
         if (userName.includes(search)) {
             row.style.display = 'table-row';
         } else {
